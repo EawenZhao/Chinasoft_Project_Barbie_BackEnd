@@ -37,4 +37,8 @@ public class MemberController {
 
         return Result.success(token);
     }
+
+    public Result aaa(){
+        return Result.success();
+    }
 }
