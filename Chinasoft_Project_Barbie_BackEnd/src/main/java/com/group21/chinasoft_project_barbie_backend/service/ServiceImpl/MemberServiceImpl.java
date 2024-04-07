@@ -14,11 +14,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member login(String username, String password){
         Member member  = memberMapper.login(username);
-        String passwd = member.getPassword();
         if(member == null){
             throw new LoginFailException("用户不存在");
-        } else if (!passwd.equals(password)) {
-            throw new LoginFailException("登陆失败");
+        }
+
+        if (!member.getPassword().equals(password)) {
+            throw new LoginFailException("密码错误");
         }
         return member;
     }
