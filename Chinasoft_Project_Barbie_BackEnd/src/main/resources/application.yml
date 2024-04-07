@@ -27,7 +27,7 @@ logging:
 chinasoft-project-barbie:
     jwt:
         #加密密钥
-        secret-key: swu-helper
+        secret-key: chinasoft-project-barbie
         #过期时间
         ttl: 7200000
         #前端传过来的令牌名称
