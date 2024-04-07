@@ -9,12 +9,14 @@ import com.group21.chinasoft_project_barbie_backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/member")
 public class MemberController {
     @Autowired
     JwtProperties jwtProperties;
@@ -26,7 +28,7 @@ public class MemberController {
         Member member = memberService.login(memberLoginDTO.getUsername(),memberLoginDTO.getPassword());
 
         //登陆成功生成jwt令牌
-        Map<String, Object> claims =new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("memberId", member.getMemberId());
         String token = JwtUtil.createJWT(
                 jwtProperties.getSecretKey(),
