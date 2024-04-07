@@ -1,5 +1,6 @@
 package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
+import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.exception.LoginFailException;
 import com.group21.chinasoft_project_barbie_backend.mapper.MemberMapper;
@@ -22,5 +23,10 @@ public class MemberServiceImpl implements MemberService {
             throw new LoginFailException("密码错误");
         }
         return member;
+    }
+
+    @Override
+    public void evaluate(StaffEvaluateDTO StaffEvaluateDTO) {
+        memberMapper.evaluateStaff(StaffEvaluateDTO.getStaffId(),StaffEvaluateDTO.getResidentId(),StaffEvaluateDTO.getStar(),StaffEvaluateDTO.getComment());
     }
 }

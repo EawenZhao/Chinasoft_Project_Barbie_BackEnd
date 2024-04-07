@@ -2,6 +2,7 @@ package com.group21.chinasoft_project_barbie_backend.controller;
 
 import com.group21.chinasoft_project_barbie_backend.Result.Result;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberLoginDTO;
+import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.properties.JwtProperties;
 import com.group21.chinasoft_project_barbie_backend.service.MemberService;
@@ -36,6 +37,12 @@ public class MemberController {
                 claims);
 
         return Result.success(token);
+    }
+
+    @PostMapping("evaluate")
+    public Result evaluate(@RequestBody StaffEvaluateDTO staffEvaluateDTO){
+        memberService.evaluate(staffEvaluateDTO);
+        return Result.success();
     }
 
 }
