@@ -20,7 +20,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
     @Autowired
     JwtProperties jwtProperties;
 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (!(handler instanceof HandlerMethod)) {
             //当前拦截到的不是动态方法，直接放行
             return true;
@@ -28,14 +28,14 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader(jwtProperties.getTokenName());
 
-        try{
-            log.info("jwt校验{}",token);
-            Claims claims = JwtUtil.parseJWT(jwtProperties.getSecretKey(),token);
+        try {
+            log.info("jwt校验{}", token);
+            Claims claims = JwtUtil.parseJWT(jwtProperties.getSecretKey(), token);
             Long memberId = Long.valueOf(claims.get("memberId").toString());
-            log.info("当前用户名：{}",memberId);
+            log.info("当前用户名：{}", memberId);
             BaseContext.setCurrentUserId(memberId);
             return true;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setStatus(401);
             return false;
         }
