@@ -5,7 +5,7 @@ import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 
 public interface MemberService {
-    Member login(String userName, String password);
+    Member login(String phone, String password);
 
 
     int register(MemberRegisterDTO memberRegisterDTO);

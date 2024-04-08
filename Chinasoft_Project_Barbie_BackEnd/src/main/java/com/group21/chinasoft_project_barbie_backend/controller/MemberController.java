@@ -28,7 +28,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public Result login(@RequestBody MemberLoginDTO memberLoginDTO){
-        Member member = memberService.login(memberLoginDTO.getUsername(),memberLoginDTO.getPassword());
+        Member member = memberService.login(memberLoginDTO.getPhone(),memberLoginDTO.getPassword());
 
         //登陆成功生成jwt令牌
         Map<String, Object> claims = new HashMap<>();

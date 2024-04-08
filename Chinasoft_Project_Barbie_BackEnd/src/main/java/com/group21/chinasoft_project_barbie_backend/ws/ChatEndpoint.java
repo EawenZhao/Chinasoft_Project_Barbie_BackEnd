@@ -33,7 +33,7 @@ public class ChatEndpoint {
         //将session保存
         users.put(username,session);
         //将用户广播给对应的医生
-        MessageUtils.getMessage(true,null,)
+        //MessageUtils.getMessage(true,null,)
     }
 
     //每当出现新用户，就将其广播给对应的医生

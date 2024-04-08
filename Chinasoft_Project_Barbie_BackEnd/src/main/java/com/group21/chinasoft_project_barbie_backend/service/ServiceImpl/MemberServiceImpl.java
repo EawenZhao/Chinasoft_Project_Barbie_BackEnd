@@ -16,8 +16,8 @@ public class MemberServiceImpl implements MemberService {
     MemberMapper memberMapper;
 
     @Override
-    public Member login(String username, String password) {
-        Member member = memberMapper.getMemberByUsername(username);
+    public Member login(String phone, String password) {
+        Member member = memberMapper.getMemberByPhone(phone);
         if (member == null) {
             throw new LoginFailException("用户不存在");
         }

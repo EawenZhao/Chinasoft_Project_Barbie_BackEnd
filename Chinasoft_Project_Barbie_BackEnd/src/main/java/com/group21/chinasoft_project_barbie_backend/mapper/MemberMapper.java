@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface MemberMapper {
-    @Select("select * from family_members_mobile where username = #{username}")
-    Member getMemberByUsername(String username);
+    @Select("select * from family_members_mobile where phone = #{phone}")
+    Member getMemberByPhone(String phone);
 
     @Insert("INSERT INTO family_members_mobile(username, password, resident_id, phone, email) VALUES(#{username}, #{password}, #{residentId}, #{phone}, #{email})")
     @Options(useGeneratedKeys = true, keyProperty = "memberId")
