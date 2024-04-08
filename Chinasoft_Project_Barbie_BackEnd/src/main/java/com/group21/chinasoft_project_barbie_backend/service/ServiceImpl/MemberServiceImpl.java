@@ -39,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
                 return affectedRows;
             }
         } catch (Exception e) {
-            throw new RegisterException("注册失败，请检查服务器下面日志" + e.getMessage());
+            throw new RegisterException("注册失败，请检查服务器下面日志     " + e.getMessage());
         }
 
         // 如果插入未成功或其他原因导致未能返回用户，抛出异常
