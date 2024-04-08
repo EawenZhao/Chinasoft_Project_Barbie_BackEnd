@@ -1,5 +1,6 @@
 package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
+import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.exception.LoginFailException;
 import com.group21.chinasoft_project_barbie_backend.exception.RegisterException;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-    //private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
     @Autowired
     MemberMapper memberMapper;
     @Override
@@ -44,5 +44,10 @@ public class MemberServiceImpl implements MemberService {
 
         // 如果插入未成功或其他原因导致未能返回用户，抛出异常
         throw new RegisterException("注册失败");
+    }
+
+    @Override
+    public void evaluate(StaffEvaluateDTO StaffEvaluateDTO) {
+        memberMapper.evaluateStaff(StaffEvaluateDTO.getStaffId(),StaffEvaluateDTO.getResidentId(),StaffEvaluateDTO.getStar(),StaffEvaluateDTO.getComment());
     }
 }

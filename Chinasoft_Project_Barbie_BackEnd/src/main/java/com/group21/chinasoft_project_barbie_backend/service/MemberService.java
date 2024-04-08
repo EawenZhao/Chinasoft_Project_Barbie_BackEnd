@@ -1,5 +1,6 @@
 package com.group21.chinasoft_project_barbie_backend.service;
 
+import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 
 public interface MemberService {
@@ -7,4 +8,6 @@ public interface MemberService {
 
 
     int register(String username, String password, int residentId, String phone, String email);
+
+    void evaluate(StaffEvaluateDTO staffEvaluateDTO);
 }
