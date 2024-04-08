@@ -3,7 +3,6 @@ package com.group21.chinasoft_project_barbie_backend.ws;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.mapper.MemberMapper;
-import com.group21.chinasoft_project_barbie_backend.utils.MessageUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.EndpointConfig;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -39,7 +37,8 @@ public class ChatEndpoint {
     }
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("role") String role, @PathParam("id") String id) {
+    public void onOpen(Session session, @PathParam("role") String role) {
+        String id = String.valueOf(BaseContext.getCurrentId());
         if ("doctor".equals(role)) {
             // 新医生连接，将其Session保存到doctorSessions映射中
             doctorSessions.put(id, session);
@@ -65,12 +64,12 @@ public class ChatEndpoint {
      * }
      * @param message
      * @param role
-     * @param senderId
      * @throws Exception
      */
     @OnMessage
-    public void onMessage(String message, @PathParam("role") String role, @PathParam("id") String senderId) throws Exception {
+    public void onMessage(String message, @PathParam("role") String role) throws Exception {
         ChatMessage chatMessage = objectMapper.readValue(message, ChatMessage.class);
+        String senderId = String.valueOf(BaseContext.getCurrentId());
 
         if ("user".equals(role)) {
             // 用户发送消息给医生
