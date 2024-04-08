@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@ServerEndpoint(value="/chat/{role}")
+@ServerEndpoint(value="/chat/{role}/{id}")
 @Slf4j
 public class ChatEndpoint {
 
@@ -37,8 +37,8 @@ public class ChatEndpoint {
     }
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("role") String role) {
-        String id = String.valueOf(BaseContext.getCurrentId());
+    public void onOpen(Session session, @PathParam("role") String role,@PathParam("id") String id) {
+        System.out.println(BaseContext.getCurrentId());
         if ("doctor".equals(role)) {
             // 新医生连接，将其Session保存到doctorSessions映射中
             doctorSessions.put(id, session);
@@ -64,12 +64,12 @@ public class ChatEndpoint {
      * }
      * @param message
      * @param role
+     * @param senderId
      * @throws Exception
      */
     @OnMessage
-    public void onMessage(String message, @PathParam("role") String role) throws Exception {
+    public void onMessage(String message, @PathParam("role") String role,@PathParam("id") String senderId) throws Exception {
         ChatMessage chatMessage = objectMapper.readValue(message, ChatMessage.class);
-        String senderId = String.valueOf(BaseContext.getCurrentId());
 
         if ("user".equals(role)) {
             // 用户发送消息给医生

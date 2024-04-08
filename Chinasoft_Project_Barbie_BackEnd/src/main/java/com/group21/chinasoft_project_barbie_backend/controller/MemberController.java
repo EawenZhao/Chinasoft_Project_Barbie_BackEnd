@@ -1,6 +1,8 @@
 package com.group21.chinasoft_project_barbie_backend.controller;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.group21.chinasoft_project_barbie_backend.Result.Result;
+import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberLoginDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberRegisterDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
@@ -37,7 +39,7 @@ public class MemberController {
                 jwtProperties.getSecretKey(),
                 jwtProperties.getTtl(),
                 claims);
-
+        System.out.println(BaseContext.getCurrentId());
         return Result.success(token);
     }
 
