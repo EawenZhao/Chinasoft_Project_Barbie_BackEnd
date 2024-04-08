@@ -12,4 +12,7 @@ public interface MemberMapper {
 
     @Insert("insert into staff_evaluation values (#{staffId},#{residentId},#{star},#{comment})")
     void evaluateStaff(int staffId, int residentId, Double star, String comment);
+
+    @Select("select username from family_members_mobile where member_id = #{memberId}")
+    String getUsernameById(int memberId);
 }
