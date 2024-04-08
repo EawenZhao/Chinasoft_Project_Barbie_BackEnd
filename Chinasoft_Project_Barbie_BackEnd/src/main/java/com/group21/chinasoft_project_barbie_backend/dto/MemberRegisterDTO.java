@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class MemberRegisterDTO {
+    private int memberId;
     private String username;
     private String password;
     private int residentId;

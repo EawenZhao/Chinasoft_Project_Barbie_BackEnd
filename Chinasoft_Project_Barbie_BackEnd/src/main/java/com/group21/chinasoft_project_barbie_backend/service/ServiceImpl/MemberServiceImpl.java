@@ -1,13 +1,12 @@
 package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
+import com.group21.chinasoft_project_barbie_backend.dto.MemberRegisterDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.exception.LoginFailException;
 import com.group21.chinasoft_project_barbie_backend.exception.RegisterException;
 import com.group21.chinasoft_project_barbie_backend.mapper.MemberMapper;
 import com.group21.chinasoft_project_barbie_backend.service.MemberService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +14,11 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
     @Autowired
     MemberMapper memberMapper;
+
     @Override
-    public Member login(String username, String password){
-        Member member  = memberMapper.getMemberByUsername(username);
-        if(member == null){
+    public Member login(String username, String password) {
+        Member member = memberMapper.getMemberByUsername(username);
+        if (member == null) {
             throw new LoginFailException("用户不存在");
         }
 
@@ -29,12 +29,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int register(String username, String password, int residentId, String phone, String email) {
+    public int register(MemberRegisterDTO memberRegisterDTO) {
         //这里可能有一些其他的注册验证逻辑...
 
         try {
-            int affectedRows = memberMapper.register(username, password, residentId, phone, email);
-            if(affectedRows > 0){
+            int affectedRows = memberMapper.register(memberRegisterDTO);
+            if (affectedRows > 0) {
                 // 如果注册成功
                 return affectedRows;
             }
@@ -48,6 +48,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void evaluate(StaffEvaluateDTO StaffEvaluateDTO) {
-        memberMapper.evaluateStaff(StaffEvaluateDTO.getStaffId(),StaffEvaluateDTO.getResidentId(),StaffEvaluateDTO.getStar(),StaffEvaluateDTO.getComment());
+        memberMapper.evaluateStaff(StaffEvaluateDTO.getStaffId(), StaffEvaluateDTO.getResidentId(), StaffEvaluateDTO.getStar(), StaffEvaluateDTO.getComment());
     }
 }

@@ -45,12 +45,7 @@ public class MemberController {
     public Result register(@RequestBody MemberRegisterDTO memberRegisterDTO) {
         try {
             // 调用Service层的注册方法
-            int affectedRows = memberService.register(
-                    memberRegisterDTO.getUsername(),
-                    memberRegisterDTO.getPassword(),
-                    memberRegisterDTO.getResidentId(),
-                    memberRegisterDTO.getPhone(),
-                    memberRegisterDTO.getEmail());
+            int affectedRows = memberService.register(memberRegisterDTO);
 
             // 根据affectedRows判断注册是否成功
             if(affectedRows > 0) {
