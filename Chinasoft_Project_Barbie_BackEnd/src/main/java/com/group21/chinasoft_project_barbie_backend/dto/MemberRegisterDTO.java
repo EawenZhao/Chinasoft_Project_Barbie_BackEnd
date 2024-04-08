@@ -7,9 +7,8 @@ import lombok.Data;
 public class MemberRegisterDTO {
     private String username;
     private String password;
-    private int memberId;
     private int residentId;
-    private String relation;
+//    private String relation;
     private String phone;
     private String email;
 }
