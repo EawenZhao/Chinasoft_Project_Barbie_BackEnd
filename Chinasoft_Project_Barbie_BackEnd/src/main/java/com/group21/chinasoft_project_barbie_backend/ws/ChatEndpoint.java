@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@ServerEndpoint(value="/chat/{role}/{id}")
+@ServerEndpoint(value="/chat/{role}")
 @Slf4j
 public class ChatEndpoint {
 
