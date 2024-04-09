@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+//todo 用于websocketServerEndpointConfiguration
 @Component
 public class ApplicationContextProvider implements ApplicationContextAware {
 

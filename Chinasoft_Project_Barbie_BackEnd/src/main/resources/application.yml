@@ -7,10 +7,13 @@ spring:
             url: jdbc:mysql://8.138.0.106:3306/Chinasoft_21Group?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
             username: root
             password: 15222843862Zyh!
+    main:
+        allow-circular-references: true
+
 mybatis:
     #mapper配置文件
     mapper-locations: classpath:mapper/*.xml
-    type-aliases-package: com.sky.entity
+    type-aliases-package: com.group21.entity
     configuration:
         #开启驼峰命名
         map-underscore-to-camel-case: true
@@ -32,3 +35,17 @@ chinasoft-project-barbie:
         ttl: 7200000
         #前端传过来的令牌名称
         token-name: token
+
+
+mqtt:
+    hostUrl: tcp://127.0.0.1:1883
+    username: admin
+    password: Zzc20031202
+    client-id: test1
+    cleanSession: true
+    reconnect: true
+    timeout: 100
+    keepAlive: 100
+    defaultTopic: bcd
+    isOpen: true
+    qos: 1

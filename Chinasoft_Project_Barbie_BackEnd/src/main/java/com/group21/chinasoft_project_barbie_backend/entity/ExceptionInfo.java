@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Exception {
-    Date date1;
+public class ExceptionInfo {
+    Timestamp exceptionStartTime;
     String exceptionInfo;
-    Date date2;
+    Timestamp exceptionEndTime;
 }

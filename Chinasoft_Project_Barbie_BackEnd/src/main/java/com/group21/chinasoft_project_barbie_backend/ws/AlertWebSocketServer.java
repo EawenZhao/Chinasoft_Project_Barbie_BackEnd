@@ -66,7 +66,7 @@ public class AlertWebSocketServer {
 
     @OnMessage
     public void onMessage(String message, Session session) throws Exception {
-        number a = objectMapper.readValue(message,number.class);
+        Signs a = objectMapper.readValue(message,Signs.class);
         Map<String,Object> map=new HashMap<>();
         String alert = checkAndNotify(a.getHeartRate(), a.getBloodOxygen(), a.getBodyTemperature());
         if(alert !=null && a.getExceptionMessage()==null) {
@@ -106,11 +106,10 @@ public class AlertWebSocketServer {
     @NoArgsConstructor
     @AllArgsConstructor
     // 假设的ChatMessage类
-    public static class number {
+    public static class Signs {
         private double heartRate;
         private double bloodOxygen;
         private double bodyTemperature;
         private String exceptionMessage;
     }
-
 }
