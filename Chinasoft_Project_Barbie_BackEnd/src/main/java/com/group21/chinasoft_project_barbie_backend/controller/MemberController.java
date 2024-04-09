@@ -66,7 +66,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping("evaluate")
+    @PostMapping("/evaluate")
     public Result evaluate(@RequestBody StaffEvaluateDTO staffEvaluateDTO){
         memberService.evaluate(staffEvaluateDTO);
         return Result.success();
