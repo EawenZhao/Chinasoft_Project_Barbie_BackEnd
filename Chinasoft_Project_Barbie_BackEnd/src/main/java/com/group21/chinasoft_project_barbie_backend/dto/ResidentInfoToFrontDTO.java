@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class ResidentInfoToFrontDTO {
-    private String id;   //用户的唯一标识
+//    private String id;   //用户的唯一标识
     private int code;   //操作的结果（0代表失败，1代表成功）
     private List<DataItem> data;
     // data 字段，它是一个包含多个 DataItem 对象的列表。
