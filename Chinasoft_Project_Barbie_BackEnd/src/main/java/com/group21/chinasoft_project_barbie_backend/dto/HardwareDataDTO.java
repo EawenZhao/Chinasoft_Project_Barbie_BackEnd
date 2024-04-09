@@ -7,5 +7,5 @@ import java.util.Map;
 @Data
 public class HardwareDataDTO {
     private String id;
-    private Map<String, String> data;
+    private Map<String, Double> data;
 }
