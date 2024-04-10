@@ -2,6 +2,7 @@ package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
 import com.group21.chinasoft_project_barbie_backend.dto.ResidentInfoDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.ExceptionInfo;
+import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
 import com.group21.chinasoft_project_barbie_backend.entity.ResidentInfo;
 import com.group21.chinasoft_project_barbie_backend.exception.GetInfoException;
 import com.group21.chinasoft_project_barbie_backend.mapper.ResidentMapper;
@@ -48,6 +49,11 @@ public class ResidentServiceImpl implements ResidentService {
             list2.add(new ExceptionInfoVo(formatter.format(exceptionInfo.getExceptionStartTime()),exceptionInfo.getExceptionInfo(), formatter.format(exceptionInfo.getExceptionEndTime())));
         }
         return list2;
+    }
+
+    @Override
+    public HealthInfo getNowInfo(int residentId) {
+        return residentMapper.getNewestInfoById(residentId);
     }
 
 }

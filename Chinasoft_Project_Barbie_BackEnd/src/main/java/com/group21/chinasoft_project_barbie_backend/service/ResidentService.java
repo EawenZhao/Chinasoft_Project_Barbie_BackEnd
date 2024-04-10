@@ -2,6 +2,7 @@ package com.group21.chinasoft_project_barbie_backend.service;
 
 import com.group21.chinasoft_project_barbie_backend.dto.ResidentInfoDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.ExceptionInfo;
+import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
 import com.group21.chinasoft_project_barbie_backend.entity.ResidentInfo;
 import com.group21.chinasoft_project_barbie_backend.vo.ExceptionInfoVo;
 
@@ -11,4 +12,6 @@ public interface ResidentService {
     ResidentInfoDTO getResidentInfo(int residentId);
 
     List<ExceptionInfoVo> getAllExceptions(int residentId);
+
+    HealthInfo getNowInfo(int residentId);
 }

@@ -3,6 +3,7 @@ package com.group21.chinasoft_project_barbie_backend.mqtt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group21.chinasoft_project_barbie_backend.dto.HardwareData1DTO;
 import com.group21.chinasoft_project_barbie_backend.dto.HardwareDataDTO;
+import com.group21.chinasoft_project_barbie_backend.mapper.HardwareInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -18,6 +19,9 @@ import java.nio.charset.StandardCharsets;
 public class MqttAcceptCallBack implements MqttCallbackExtended {
     @Autowired
     private MqttAcceptClient mqttAcceptClient;
+
+    @Autowired
+    HardwareInfoMapper hardwareInfoMapper;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -55,13 +59,20 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
      */
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-        log.info("[mqtt-consumer] receive topic: " + topic);
-        log.info("[mqtt-consumer] receive Qos: " + mqttMessage.getQos());
         String message = new String(mqttMessage.getPayload());
-        log.info("[mqtt-consumer] receive message: " + message);
         HardwareData1DTO hardwareData1DTO = objectMapper.readValue(message,HardwareData1DTO.class);
-        System.out.println(hardwareData1DTO + hardwareData1DTO.getId() +" "+ hardwareData1DTO.getData().getSpo2() +" "+ hardwareData1DTO.getData().getHeart());
-
+        switch (hardwareData1DTO.getId()){
+            case "0x04":
+                hardwareInfoMapper.insertTemperature(Double.parseDouble(hardwareData1DTO.getData().getTemperature()));
+                System.out.println(Double.parseDouble(hardwareData1DTO.getData().getTemperature()));
+                break;
+            case "0x05":
+                System.out.println(Double.parseDouble( hardwareData1DTO.getData().getHeart())+" "+Double.parseDouble(hardwareData1DTO.getData().getSpo2()));
+                hardwareInfoMapper.insertHeartAndOxygen(Double.parseDouble(hardwareData1DTO.getData().getHeart()),Double.parseDouble(hardwareData1DTO.getData().getSpo2()));
+                break;
+            default:
+                break;
+        }
     }
 
     /**

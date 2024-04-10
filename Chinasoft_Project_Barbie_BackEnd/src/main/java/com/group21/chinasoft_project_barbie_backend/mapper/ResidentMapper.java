@@ -1,6 +1,7 @@
 package com.group21.chinasoft_project_barbie_backend.mapper;
 
 import com.group21.chinasoft_project_barbie_backend.entity.ExceptionInfo;
+import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
 import com.group21.chinasoft_project_barbie_backend.entity.ResidentInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,4 +19,17 @@ public interface ResidentMapper {
 
     @Select("SELECT exception_start_time,exception_info,exception_end_time FROM resident_exception_history where resident_id=#{residentId}")
     List<ExceptionInfo> findAllExceptions(int residentId);
+
+    @Select("SELECT\n" +
+            "    ho.heart_rate,\n" +
+            "    ho.oxygen_level,\n" +
+            "    t.body_temperature\n" +
+            "FROM\n" +
+            "    (SELECT heart_rate, oxygen_level\n" +
+            "     FROM health_data_seconds\n" +
+            "     WHERE id = (SELECT MAX(id) FROM health_data_seconds WHERE resident_id = #{residentId})) AS ho,\n" +
+            "    (SELECT body_temperature\n" +
+            "     FROM temperature_seconds\n" +
+            "     WHERE id = (SELECT MAX(id) FROM temperature_seconds WHERE resident_id = #{residentId})) AS t;")
+    HealthInfo getNewestInfoById(int residentId);
 }
