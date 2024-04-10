@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class HardwareDataDTO {
     private String id;
     private HealthDTO data;

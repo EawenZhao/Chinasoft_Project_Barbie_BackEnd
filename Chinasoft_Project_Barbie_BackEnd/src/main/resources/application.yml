@@ -38,9 +38,9 @@ chinasoft-project-barbie:
 
 
 mqtt:
-    hostUrl: tcp://127.0.0.1:1883
+    hostUrl: tcp://8.138.0.106:1883
     username: admin
-    password: Zzc20031202
+    password: 15222843862Zyh
     client-id: test1
     cleanSession: true
     reconnect: true
