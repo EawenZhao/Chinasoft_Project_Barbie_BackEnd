@@ -1,9 +1,9 @@
 package com.group21.chinasoft_project_barbie_backend.mqtt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.group21.chinasoft_project_barbie_backend.dto.HardwareData1DTO;
 import com.group21.chinasoft_project_barbie_backend.dto.HardwareDataDTO;
 import com.group21.chinasoft_project_barbie_backend.mapper.HardwareInfoMapper;
+import com.group21.chinasoft_project_barbie_backend.mapper.ResidentMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -13,15 +13,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Slf4j
 @Component
 public class MqttAcceptCallBack implements MqttCallbackExtended {
+
+    private static final double HR_MIN = 60.0;
+    private static final double HR_MAX = 100.0;
+    private static final double BO_MIN = 95.0;
+    private static final double BO_MAX = 100.0;
+    private static final double BT_MIN = 36.5;
+    private static final double BT_MAX = 37.3;
     @Autowired
     private MqttAcceptClient mqttAcceptClient;
 
     @Autowired
     HardwareInfoMapper hardwareInfoMapper;
+    @Autowired
+    ResidentMapper residentMapper;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -51,24 +62,53 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
         }
     }
 
+   /* {
+        "id": "0x05",
+            "data": {
+        "spo2": "",
+                "heart": ""
+        }
+    }
+
+    {
+        "id": "0x04",
+            "data": {
+        "temperature": "",
+        }
+    }*/
     /**
      * 客户端收到信息触发
      * @param topic
      * @param mqttMessage
      * @throws Exception
      */
+
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
         String message = new String(mqttMessage.getPayload());
-        HardwareData1DTO hardwareData1DTO = objectMapper.readValue(message,HardwareData1DTO.class);
-        switch (hardwareData1DTO.getId()){
+        HardwareDataDTO hardwareDataDTO = objectMapper.readValue(message, HardwareDataDTO.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+
+        switch (hardwareDataDTO.getId()){
             case "0x04":
-                hardwareInfoMapper.insertTemperature(Double.parseDouble(hardwareData1DTO.getData().getTemperature()));
-                System.out.println(Double.parseDouble(hardwareData1DTO.getData().getTemperature()));
+                double temperature = Double.parseDouble(hardwareDataDTO.getData().getTemperature());
+                if (temperature < BT_MIN || temperature > BT_MAX){
+                    residentMapper.insertException(2,formatter.format(date), "体温异常",null);
+                }
+
+                hardwareInfoMapper.insertTemperature(temperature);
                 break;
             case "0x05":
-                System.out.println(Double.parseDouble( hardwareData1DTO.getData().getHeart())+" "+Double.parseDouble(hardwareData1DTO.getData().getSpo2()));
-                hardwareInfoMapper.insertHeartAndOxygen(Double.parseDouble(hardwareData1DTO.getData().getHeart()),Double.parseDouble(hardwareData1DTO.getData().getSpo2()));
+                double heartRate = Double.parseDouble(hardwareDataDTO.getData().getHeart());
+                double bloodOxygen = Double.parseDouble(hardwareDataDTO.getData().getSpo2());
+                if (heartRate < HR_MIN || heartRate > HR_MAX){
+                    residentMapper.insertException(2,formatter.format(date), "心率异常",null);
+                }else if (bloodOxygen < BO_MIN || bloodOxygen > BO_MAX){
+                    residentMapper.insertException(2,formatter.format(date), "血氧异常",null);
+                }
+
+                hardwareInfoMapper.insertHeartAndOxygen(Double.parseDouble(hardwareDataDTO.getData().getHeart()),Double.parseDouble(hardwareDataDTO.getData().getSpo2()));
                 break;
             default:
                 break;

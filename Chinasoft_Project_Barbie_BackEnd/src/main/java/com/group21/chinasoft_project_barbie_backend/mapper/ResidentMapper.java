@@ -6,6 +6,7 @@ import com.group21.chinasoft_project_barbie_backend.entity.ResidentInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -32,4 +33,14 @@ public interface ResidentMapper {
             "     FROM temperature_seconds\n" +
             "     WHERE id = (SELECT MAX(id) FROM temperature_seconds WHERE resident_id = #{residentId})) AS t;")
     HealthInfo getNewestInfoById(int residentId);
+
+    @Update("UPDATE resident_exception_history AS reh\n" +
+            "JOIN (\n" +
+            "    SELECT MAX(id) AS maxId\n" +
+            "    FROM resident_exception_history\n" +
+            "    WHERE resident_id = #{residentId}\n" +
+            ") AS maxReh ON reh.id = maxReh.maxId\n" +
+            "SET reh.exception_end_time = NOW()\n" +
+            "WHERE reh.resident_id = #{residentId};")
+    void updateExceptionEndtimeById(int residentId);
 }

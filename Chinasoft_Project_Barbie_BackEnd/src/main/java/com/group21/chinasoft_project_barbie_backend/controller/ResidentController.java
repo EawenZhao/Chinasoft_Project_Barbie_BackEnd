@@ -49,4 +49,15 @@ public class ResidentController {
         HealthInfo healthInfo = residentService.getNowInfo(residentId);
         return Result.success(healthInfo);
     }
+
+    /**
+     * 取消报警接口
+     * @param residentId
+     * @return
+     */
+    @GetMapping("/cancel/{id}")
+    public Result cancelException(@PathVariable("id") int residentId){
+        residentService.cancelException(residentId);
+        return Result.success();
+    }
 }

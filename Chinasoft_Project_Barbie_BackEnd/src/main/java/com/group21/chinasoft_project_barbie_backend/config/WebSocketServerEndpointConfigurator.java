@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.websocket.server.ServerEndpointConfig;
 
+//todo 用于ws 不知道有没有用
 @Component
 public class WebSocketServerEndpointConfigurator extends ServerEndpointConfig.Configurator {
 

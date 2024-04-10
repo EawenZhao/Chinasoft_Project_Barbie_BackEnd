@@ -14,4 +14,6 @@ public interface ResidentService {
     List<ExceptionInfoVo> getAllExceptions(int residentId);
 
     HealthInfo getNowInfo(int residentId);
+
+    void cancelException(int residentId);
 }

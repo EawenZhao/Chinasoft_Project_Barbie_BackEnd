@@ -13,4 +13,5 @@ public class ExceptionInfoVo {
     String  exceptionStartTime;
     String exceptionInfo;
     String exceptionEndTime;
+    Boolean isCurrent;
 }

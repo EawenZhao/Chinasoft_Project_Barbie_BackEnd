@@ -11,7 +11,6 @@ import com.group21.chinasoft_project_barbie_backend.vo.ExceptionInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +45,17 @@ public class ResidentServiceImpl implements ResidentService {
         //将list中的time序列化
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (ExceptionInfo exceptionInfo : list) {
-            list2.add(new ExceptionInfoVo(formatter.format(exceptionInfo.getExceptionStartTime()),exceptionInfo.getExceptionInfo(), formatter.format(exceptionInfo.getExceptionEndTime())));
+            ExceptionInfoVo exceptionInfoVo = new ExceptionInfoVo();
+            exceptionInfoVo.setExceptionStartTime(formatter.format(exceptionInfo.getExceptionStartTime()));
+            exceptionInfoVo.setExceptionInfo(exceptionInfo.getExceptionInfo());
+
+            if(exceptionInfo.getExceptionEndTime()!=null){
+                exceptionInfoVo.setExceptionEndTime(formatter.format(exceptionInfo.getExceptionEndTime()));
+                exceptionInfoVo.setIsCurrent(false);
+            }else {
+                exceptionInfoVo.setIsCurrent(true);
+            }
+            list2.add(exceptionInfoVo);
         }
         return list2;
     }
@@ -54,6 +63,11 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public HealthInfo getNowInfo(int residentId) {
         return residentMapper.getNewestInfoById(residentId);
+    }
+
+    @Override
+    public void cancelException(int residentId) {
+        residentMapper.updateExceptionEndtimeById(residentId);
     }
 
 }
