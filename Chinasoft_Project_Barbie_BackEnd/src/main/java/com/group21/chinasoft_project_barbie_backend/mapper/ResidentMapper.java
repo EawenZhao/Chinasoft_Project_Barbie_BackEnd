@@ -18,7 +18,7 @@ public interface ResidentMapper {
     @Insert("INSERT into resident_exception_history(resident_id,exception_start_time,exception_info,exception_end_time) values(#{residentId},#{exceptionStartTime},#{exceptionInfo},#{exceptionEndTime})")
     void insertException(int residentId, String exceptionStartTime, String exceptionInfo, String exceptionEndTime);
 
-    @Select("SELECT exception_start_time,exception_info,exception_end_time FROM resident_exception_history where resident_id=#{residentId}")
+    @Select("SELECT exception_start_time,exception_info,exception_end_time FROM resident_exception_history where resident_id=#{residentId} order by  exception_end_time asc")
     List<ExceptionInfo> findAllExceptions(int residentId);
 
     @Select("SELECT\n" +
