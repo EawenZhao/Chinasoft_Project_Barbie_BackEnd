@@ -111,7 +111,7 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
                 }else if (bloodOxygen < BO_MIN || bloodOxygen > BO_MAX){
                     residentMapper.insertException(2,formatter.format(date), "血氧异常",null);
                 }
-                hardwareInfoMapper.insertHeartAndOxygen(Double.parseDouble(hardwareDataDTO.getData().getHeart()),Double.parseDouble(hardwareDataDTO.getData().getSpo2()));
+                hardwareInfoMapper.insertHeartAndOxygen(heartRate,bloodOxygen);
                 break;
             default:
                 break;
