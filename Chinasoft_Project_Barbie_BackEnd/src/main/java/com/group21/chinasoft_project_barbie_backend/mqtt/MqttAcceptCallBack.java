@@ -20,8 +20,8 @@ import java.text.SimpleDateFormat;
 @Component
 public class MqttAcceptCallBack implements MqttCallbackExtended {
 
-    private static final double HR_MIN = 60.0;
-    private static final double HR_MAX = 100.0;
+    private static final double HR_MIN = 50.0;
+    private static final double HR_MAX = 130.0;
     private static final double BO_MIN = 95.0;
     private static final double BO_MAX = 100.0;
     private static final double BT_MIN = 36.5;
@@ -92,12 +92,16 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
 
         switch (hardwareDataDTO.getId()){
             case "0x04":
+                System.out.println("1");
                 double temperature = Double.parseDouble(hardwareDataDTO.getData().getTemperature());
+                System.out.println("2");
+                System.out.println(temperature);
                 if (temperature < BT_MIN || temperature > BT_MAX){
                     residentMapper.insertException(2,formatter.format(date), "体温异常",null);
                 }
-
+                System.out.println("3");
                 hardwareInfoMapper.insertTemperature(temperature);
+                System.out.println("4");
                 break;
             case "0x05":
                 double heartRate = Double.parseDouble(hardwareDataDTO.getData().getHeart());
@@ -107,7 +111,6 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
                 }else if (bloodOxygen < BO_MIN || bloodOxygen > BO_MAX){
                     residentMapper.insertException(2,formatter.format(date), "血氧异常",null);
                 }
-
                 hardwareInfoMapper.insertHeartAndOxygen(Double.parseDouble(hardwareDataDTO.getData().getHeart()),Double.parseDouble(hardwareDataDTO.getData().getSpo2()));
                 break;
             default:

@@ -3,7 +3,6 @@ package com.group21.chinasoft_project_barbie_backend.controller;
 import com.group21.chinasoft_project_barbie_backend.Result.Result;
 import com.group21.chinasoft_project_barbie_backend.dto.ResidentInfoDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
-import com.group21.chinasoft_project_barbie_backend.entity.ResidentInfo;
 import com.group21.chinasoft_project_barbie_backend.service.ResidentService;
 import com.group21.chinasoft_project_barbie_backend.vo.ExceptionInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;

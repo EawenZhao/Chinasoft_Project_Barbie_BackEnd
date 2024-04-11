@@ -12,6 +12,6 @@ import java.sql.Date;
 public class ResidentInfoDTO {
     String firstName;
     String lastName;
-    String username;
+    String guardian;
     int age;
 }
