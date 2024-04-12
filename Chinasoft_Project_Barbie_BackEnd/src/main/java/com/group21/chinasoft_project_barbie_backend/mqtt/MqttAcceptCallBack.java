@@ -91,19 +91,14 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
         Date date = new Date(System.currentTimeMillis());
 
         switch (hardwareDataDTO.getId()){
-            case "0x04":
-                System.out.println("1");
+            case 4:
                 double temperature = Double.parseDouble(hardwareDataDTO.getData().getTemperature());
-                System.out.println("2");
-                System.out.println(temperature);
                 if (temperature < BT_MIN || temperature > BT_MAX){
                     residentMapper.insertException(2,formatter.format(date), "体温异常",null);
                 }
-                System.out.println("3");
                 hardwareInfoMapper.insertTemperature(temperature);
-                System.out.println("4");
                 break;
-            case "0x05":
+            case 5:
                 double heartRate = Double.parseDouble(hardwareDataDTO.getData().getHeart());
                 double bloodOxygen = Double.parseDouble(hardwareDataDTO.getData().getSpo2());
                 if (heartRate < HR_MIN || heartRate > HR_MAX){
@@ -111,8 +106,6 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
                 }else if (bloodOxygen < BO_MIN || bloodOxygen > BO_MAX){
                     residentMapper.insertException(2,formatter.format(date), "血氧异常",null);
                 }
-                System.out.println(heartRate);
-                System.out.println(bloodOxygen);
                 hardwareInfoMapper.insertHeartAndOxygen(heartRate,bloodOxygen);
                 break;
             default:
