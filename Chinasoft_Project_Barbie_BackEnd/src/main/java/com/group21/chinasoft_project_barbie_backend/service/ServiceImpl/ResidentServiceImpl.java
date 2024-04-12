@@ -1,5 +1,6 @@
 package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
+import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.dto.ResidentInfoDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.ExceptionInfo;
 import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
@@ -21,9 +22,9 @@ public class ResidentServiceImpl implements ResidentService {
     @Autowired
     ResidentMapper residentMapper;
     @Override
-    public ResidentInfoDTO getResidentInfo(int residentId) {
+    public ResidentInfoDTO getResidentInfo() {
 
-        ResidentInfo residentInfo = residentMapper.findResidentInfoById(residentId);
+        ResidentInfo residentInfo = residentMapper.findResidentInfoById(BaseContext.getCurrentId().intValue());
         if(residentInfo!=null){
             Calendar cal1 = Calendar.getInstance();
             Calendar cal2 = Calendar.getInstance();
@@ -39,8 +40,8 @@ public class ResidentServiceImpl implements ResidentService {
     }
 
     @Override
-    public List<ExceptionInfoVo> getAllExceptions(int residentId) {
-        List<ExceptionInfo> list = residentMapper.findAllExceptions(residentId);
+    public List<ExceptionInfoVo> getAllExceptions() {
+        List<ExceptionInfo> list = residentMapper.findAllExceptions(BaseContext.getCurrentId().intValue());
         List<ExceptionInfoVo> list2 = new ArrayList<>();
         //将list中的time序列化
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -61,13 +62,18 @@ public class ResidentServiceImpl implements ResidentService {
     }
 
     @Override
-    public HealthInfo getNowInfo(int residentId) {
-        return residentMapper.getNewestInfoById(residentId);
+    public HealthInfo getNowInfo() {
+        return residentMapper.getNewestInfoById(BaseContext.getCurrentId().intValue());
     }
 
     @Override
     public void cancelException(int residentId) {
         residentMapper.updateExceptionEndtimeById(residentId);
+    }
+
+    @Override
+    public int getResidentId(int memberId) {
+        return residentMapper.getResidentIdByMemberId(memberId);
     }
 
 }

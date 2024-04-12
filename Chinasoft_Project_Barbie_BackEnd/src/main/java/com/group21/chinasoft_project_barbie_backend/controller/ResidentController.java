@@ -1,6 +1,7 @@
 package com.group21.chinasoft_project_barbie_backend.controller;
 
 import com.group21.chinasoft_project_barbie_backend.Result.Result;
+import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.dto.ResidentInfoDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
 import com.group21.chinasoft_project_barbie_backend.service.ResidentService;
@@ -18,34 +19,32 @@ public class ResidentController {
 
     /**
      * 获取基本信息：老人年龄，姓名，家属性名
-     * @param residentId
      * @return
      */
-    @GetMapping("/info/{id}")
-    public Result getResidentInfo(@PathVariable("id") int residentId){
-        ResidentInfoDTO residentInfoDTO = residentService.getResidentInfo(residentId);
+    @GetMapping("/info")
+    public Result getResidentInfo(){
+        ResidentInfoDTO residentInfoDTO = residentService.getResidentInfo();
         return Result.success(residentInfoDTO);
     }
 
     /**
      * 获取所有历史信息
-     * @param residentId
      * @return
      */
-    @GetMapping("/exception/{id}")
-    public Result getAllSigns(@PathVariable("id") int residentId){
-        List<ExceptionInfoVo> list = residentService.getAllExceptions(residentId);
+    @GetMapping("/exception")
+    public Result getAllSigns(){
+        List<ExceptionInfoVo> list = residentService.getAllExceptions();
         return Result.success(list);
     }
 
     /**
      * 获取当前体征信息
-     * @param residentId
      * @return
      */
-    @GetMapping("/nowinfo/{id}")
-    public Result getNowInfo(@PathVariable("id") int residentId){
-        HealthInfo healthInfo = residentService.getNowInfo(residentId);
+    @GetMapping("/nowinfo")
+    public Result getNowInfo(){
+        System.out.println(BaseContext.getCurrentId());
+        HealthInfo healthInfo = residentService.getNowInfo();
         return Result.success(healthInfo);
     }
 

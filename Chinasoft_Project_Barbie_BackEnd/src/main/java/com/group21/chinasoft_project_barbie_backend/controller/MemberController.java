@@ -10,6 +10,7 @@ import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.exception.RegisterException;
 import com.group21.chinasoft_project_barbie_backend.properties.JwtProperties;
 import com.group21.chinasoft_project_barbie_backend.service.MemberService;
+import com.group21.chinasoft_project_barbie_backend.service.ResidentService;
 import com.group21.chinasoft_project_barbie_backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,14 +28,17 @@ public class MemberController {
     JwtProperties jwtProperties;
     @Autowired
     MemberService memberService;
+    @Autowired
+    ResidentService residentService;
 
     @PostMapping("/login")
     public Result login(@RequestBody MemberLoginDTO memberLoginDTO){
         Member member = memberService.login(memberLoginDTO.getPhone(),memberLoginDTO.getPassword());
-
+        int residentId = residentService.getResidentId(member.getMemberId());
+        System.out.println(residentId);
         //登陆成功生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", member.getMemberId());
+        claims.put("residentId", residentId);
         String token = JwtUtil.createJWT(
                 jwtProperties.getSecretKey(),
                 jwtProperties.getTtl(),

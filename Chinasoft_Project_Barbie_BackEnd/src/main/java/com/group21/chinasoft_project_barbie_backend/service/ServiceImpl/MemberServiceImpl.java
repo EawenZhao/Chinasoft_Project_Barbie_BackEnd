@@ -1,5 +1,6 @@
 package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
+import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberRegisterDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
@@ -48,6 +49,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void evaluate(StaffEvaluateDTO StaffEvaluateDTO) {
-        memberMapper.evaluateStaff(StaffEvaluateDTO.getStaffId(), StaffEvaluateDTO.getResidentId(), StaffEvaluateDTO.getStar(), StaffEvaluateDTO.getComment());
+        int residentId = BaseContext.getCurrentId().intValue();
+        int staffId = memberMapper.getStaffIdByResidentId(residentId);
+        memberMapper.evaluateStaff(staffId, residentId, StaffEvaluateDTO.getStar(), StaffEvaluateDTO.getComment());
     }
 }

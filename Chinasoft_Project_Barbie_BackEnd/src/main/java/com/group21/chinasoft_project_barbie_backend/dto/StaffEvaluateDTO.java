@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StaffEvaluateDTO {
-    @JsonProperty("staff_id")
-    int staffId;
-    @JsonProperty("resident_id")
-    int residentId;
     Double star;
     String comment;
 }

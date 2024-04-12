@@ -43,4 +43,8 @@ public interface ResidentMapper {
             "SET reh.exception_end_time = NOW()\n" +
             "WHERE reh.resident_id = #{residentId};")
     void updateExceptionEndtimeById(int residentId);
+
+    @Select("select resident_id from family_members_mobile where member_id = #{memberId}")
+    int getResidentIdByMemberId(int memberId);
+
 }

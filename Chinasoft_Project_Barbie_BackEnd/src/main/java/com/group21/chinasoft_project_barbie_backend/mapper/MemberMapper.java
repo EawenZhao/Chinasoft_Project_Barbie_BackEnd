@@ -23,4 +23,7 @@ public interface MemberMapper {
 
     @Select("select staff_id from residents where resident_id=#{userId}")
     String findDoctorIdByUserId(int userId);
+
+    @Select("select staff_id from residents where resident_id = #{residentId}")
+    int getStaffIdByResidentId(int residentId);
 }

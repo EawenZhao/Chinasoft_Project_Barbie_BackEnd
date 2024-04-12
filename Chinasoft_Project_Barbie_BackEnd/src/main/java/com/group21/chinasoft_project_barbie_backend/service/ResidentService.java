@@ -9,11 +9,13 @@ import com.group21.chinasoft_project_barbie_backend.vo.ExceptionInfoVo;
 import java.util.List;
 
 public interface ResidentService {
-    ResidentInfoDTO getResidentInfo(int residentId);
+    ResidentInfoDTO getResidentInfo();
 
-    List<ExceptionInfoVo> getAllExceptions(int residentId);
+    List<ExceptionInfoVo> getAllExceptions();
 
-    HealthInfo getNowInfo(int residentId);
+    HealthInfo getNowInfo();
 
     void cancelException(int residentId);
+
+    int getResidentId(int memberId);
 }
