@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HardwareDataDTO {
     private int id;
+    private int device_id;
     private HealthDTO data;
 
     @Data

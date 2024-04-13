@@ -89,24 +89,25 @@ public class MqttAcceptCallBack implements MqttCallbackExtended {
         HardwareDataDTO hardwareDataDTO = objectMapper.readValue(message, HardwareDataDTO.class);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
+        int residentId = residentMapper.getResidentIdByDeviceId(hardwareDataDTO.getDevice_id());
 
         switch (hardwareDataDTO.getId()){
             case 4:
                 double temperature = Double.parseDouble(hardwareDataDTO.getData().getTemperature());
                 if (temperature < BT_MIN || temperature > BT_MAX){
-                    residentMapper.insertException(2,formatter.format(date), "体温异常",null);
+                    residentMapper.insertException(residentId,formatter.format(date), "体温异常",null);
                 }
-                hardwareInfoMapper.insertTemperature(temperature);
+                hardwareInfoMapper.insertTemperature(residentId,temperature);
                 break;
             case 5:
                 double heartRate = Double.parseDouble(hardwareDataDTO.getData().getHeart());
                 double bloodOxygen = Double.parseDouble(hardwareDataDTO.getData().getSpo2());
                 if (heartRate < HR_MIN || heartRate > HR_MAX){
-                    residentMapper.insertException(2,formatter.format(date), "心率异常",null);
+                    residentMapper.insertException(residentId,formatter.format(date), "心率异常",null);
                 }else if (bloodOxygen < BO_MIN || bloodOxygen > BO_MAX){
-                    residentMapper.insertException(2,formatter.format(date), "血氧异常",null);
+                    residentMapper.insertException(residentId,formatter.format(date), "血氧异常",null);
                 }
-                hardwareInfoMapper.insertHeartAndOxygen(heartRate,bloodOxygen);
+                hardwareInfoMapper.insertHeartAndOxygen(residentId,heartRate,bloodOxygen);
                 break;
             default:
                 break;

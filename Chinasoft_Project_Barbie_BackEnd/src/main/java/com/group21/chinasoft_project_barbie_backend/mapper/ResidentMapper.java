@@ -47,4 +47,6 @@ public interface ResidentMapper {
     @Select("select resident_id from family_members_mobile where member_id = #{memberId}")
     int getResidentIdByMemberId(int memberId);
 
+    @Select("select resident_id from device_resident_map where device_id = #{deviceId}")
+    int getResidentIdByDeviceId(int deviceId);
 }

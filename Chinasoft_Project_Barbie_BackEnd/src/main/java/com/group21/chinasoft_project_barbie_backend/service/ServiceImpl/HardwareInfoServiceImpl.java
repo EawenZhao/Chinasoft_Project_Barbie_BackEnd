@@ -9,12 +9,12 @@ public class HardwareInfoServiceImpl {
     @Autowired
     HardwareInfoMapper hardwareInfoMapper;
 
-    void insertTemperature(double temperature){
-        hardwareInfoMapper.insertTemperature(temperature);
+    void insertTemperature(int residentId,double temperature){
+        hardwareInfoMapper.insertTemperature(residentId,temperature);
     }
 
 
-    void insertHeartAndOxygen(double bloodOxygen,double heartRate){
-        hardwareInfoMapper.insertHeartAndOxygen(heartRate,bloodOxygen);
+    void insertHeartAndOxygen(int residentId,double bloodOxygen,double heartRate){
+        hardwareInfoMapper.insertHeartAndOxygen(residentId,heartRate,bloodOxygen);
     }
 }
