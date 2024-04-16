@@ -2,6 +2,7 @@ package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
 import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberRegisterDTO;
+import com.group21.chinasoft_project_barbie_backend.dto.RetrievePasswordDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.exception.LoginFailException;
@@ -52,5 +53,18 @@ public class MemberServiceImpl implements MemberService {
         int residentId = BaseContext.getCurrentId().intValue();
         int staffId = memberMapper.getStaffIdByResidentId(residentId);
         memberMapper.evaluateStaff(staffId, residentId, StaffEvaluateDTO.getStar(), StaffEvaluateDTO.getComment());
+    }
+
+    @Override
+    public void retrievePassword(RetrievePasswordDTO retrievePasswordDTO) {
+        Member member = memberMapper.getIdByPhone(retrievePasswordDTO.getPhone());
+        if (member == null) {
+            throw new LoginFailException("用户不存在");
+        }
+
+        if (!(member.getResidentId() == retrievePasswordDTO.getResidentId())) {
+            throw new LoginFailException("手机号错误");
+        }
+        memberMapper.updatePassword(retrievePasswordDTO.getPassword(),retrievePasswordDTO.getResidentId());
     }
 }

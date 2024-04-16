@@ -26,4 +26,11 @@ public interface MemberMapper {
 
     @Select("select staff_id from residents where resident_id = #{residentId}")
     int getStaffIdByResidentId(int residentId);
+
+
+    @Select("select * from family_members_mobile where phone = #{phone}")
+    Member getIdByPhone(String phone);
+
+    @Update("update family_members_mobile set password = #{password} where resident_id = #{residentId}")
+    void updatePassword(String password,int residentId);
 }

@@ -5,6 +5,7 @@ import com.group21.chinasoft_project_barbie_backend.Result.Result;
 import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberLoginDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.MemberRegisterDTO;
+import com.group21.chinasoft_project_barbie_backend.dto.RetrievePasswordDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.Member;
 import com.group21.chinasoft_project_barbie_backend.exception.RegisterException;
@@ -76,4 +77,9 @@ public class MemberController {
         return Result.success();
     }
 
+    @PostMapping("/retievePassword")
+    public Result retrieve(@RequestBody RetrievePasswordDTO retrievePasswordDTO){
+        memberService.retrievePassword(retrievePasswordDTO);
+        return Result.success();
+    }
 }
