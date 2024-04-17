@@ -24,6 +24,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/member/**")
                 .excludePathPatterns("/member/login")
                 .excludePathPatterns("/member/register")
+                .excludePathPatterns("/resident/cancel/{id}")
                 .excludePathPatterns("/member/retievePassword");
 //        registry.addInterceptor(jwtTokenInterceptor)
 //                .addPathPatterns("/member/**")
