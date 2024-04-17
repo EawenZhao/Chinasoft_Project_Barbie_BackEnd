@@ -41,7 +41,7 @@ mqtt:
     hostUrl: tcp://8.138.0.106:1883
     username: admin
     password: 15222843862Zyh
-    client-id: test1
+    client-id: test2
     cleanSession: true
     reconnect: true
     timeout: 100

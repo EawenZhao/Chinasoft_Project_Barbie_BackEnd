@@ -36,7 +36,6 @@ public class MemberController {
     public Result login(@RequestBody MemberLoginDTO memberLoginDTO){
         Member member = memberService.login(memberLoginDTO.getPhone(),memberLoginDTO.getPassword());
         int residentId = residentService.getResidentId(member.getMemberId());
-        System.out.println(residentId);
         //登陆成功生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put("residentId", residentId);
@@ -44,7 +43,6 @@ public class MemberController {
                 jwtProperties.getSecretKey(),
                 jwtProperties.getTtl(),
                 claims);
-        System.out.println(BaseContext.getCurrentId());
         return Result.success(token);
     }
 

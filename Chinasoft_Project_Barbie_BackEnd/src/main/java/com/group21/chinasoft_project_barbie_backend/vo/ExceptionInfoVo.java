@@ -11,5 +11,6 @@ public class ExceptionInfoVo {
     String  exceptionStartTime;
     String exceptionInfo;
     String exceptionEndTime;
+    String phone;
     Boolean isCurrent;
 }

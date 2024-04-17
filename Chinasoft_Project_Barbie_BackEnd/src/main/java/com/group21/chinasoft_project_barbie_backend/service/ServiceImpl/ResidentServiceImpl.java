@@ -48,6 +48,7 @@ public class ResidentServiceImpl implements ResidentService {
         for (ExceptionInfo exceptionInfo : list) {
             ExceptionInfoVo exceptionInfoVo = new ExceptionInfoVo();
             exceptionInfoVo.setExceptionStartTime(formatter.format(exceptionInfo.getExceptionStartTime()));
+            exceptionInfoVo.setPhone(exceptionInfo.getPhone());
             exceptionInfoVo.setExceptionInfo(exceptionInfo.getExceptionInfo());
 
             if(exceptionInfo.getExceptionEndTime()!=null){

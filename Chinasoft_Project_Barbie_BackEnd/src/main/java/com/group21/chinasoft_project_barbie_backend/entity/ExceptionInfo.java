@@ -13,4 +13,5 @@ public class ExceptionInfo {
     Timestamp exceptionStartTime;
     String exceptionInfo;
     Timestamp exceptionEndTime;
+    String phone;
 }
