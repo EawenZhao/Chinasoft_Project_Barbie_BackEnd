@@ -1,7 +1,10 @@
 package com.group21.chinasoft_project_barbie_backend.service.ServiceImpl;
 
 import com.group21.chinasoft_project_barbie_backend.context.BaseContext;
+import com.group21.chinasoft_project_barbie_backend.dto.AdmissionMonthDTO;
+import com.group21.chinasoft_project_barbie_backend.dto.ResidentAgeDTO;
 import com.group21.chinasoft_project_barbie_backend.dto.ResidentInfoDTO;
+import com.group21.chinasoft_project_barbie_backend.dto.StaffEvaluateDTO;
 import com.group21.chinasoft_project_barbie_backend.entity.ExceptionInfo;
 import com.group21.chinasoft_project_barbie_backend.entity.HealthInfo;
 import com.group21.chinasoft_project_barbie_backend.entity.ResidentInfo;
@@ -75,6 +78,48 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public int getResidentId(int memberId) {
         return residentMapper.getResidentIdByMemberId(memberId);
+    }
+
+    @Override
+    public List<ResidentAgeDTO> getAllResidentInfo() {
+        List<ResidentInfo> list = residentMapper.getAllResidentInfo();
+        List<ResidentAgeDTO> list2 = new ArrayList<>();
+        for (ResidentInfo residentInfo : list){
+            if(residentInfo!=null) {
+                Calendar cal1 = Calendar.getInstance();
+                Calendar cal2 = Calendar.getInstance();
+                Calendar calendar = Calendar.getInstance();
+                cal1.setTime(residentInfo.getDateOfBirth());
+                cal2.setTime(calendar.getTime());
+                int year1 = cal1.get(Calendar.YEAR);
+                int year2 = cal2.get(Calendar.YEAR);
+                int age = year2-year1;
+                String ageMessage = null;
+                if(age <60){
+                    ageMessage = "60以下";
+                }else if (age>60&&age<70){
+                    ageMessage = "60-70";
+                }else if (age>70&&age<80){
+                    ageMessage = "70-80";
+                } else if (age>80) {
+                    ageMessage = "80以上";
+                }
+                list2.add(new ResidentAgeDTO(ageMessage));
+            }
+        }
+        return list2;
+    }
+
+    @Override
+    public List<StaffEvaluateDTO> getEvaluation() {
+        List<StaffEvaluateDTO> list = residentMapper.getEvaluation();
+        return list;
+    }
+
+    @Override
+    public List<AdmissionMonthDTO> getAdmissionMonth() {
+        List<AdmissionMonthDTO> list = residentMapper.getAdmissionMonth();
+        return list;
     }
 
 }
